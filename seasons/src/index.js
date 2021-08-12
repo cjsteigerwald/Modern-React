@@ -1,17 +1,44 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import SeasonDisplay from "./SeasonDisplay";
+import Spinner from "./Spinner";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// auto reload
+if (module.hot) {
+	module.hot.accept();
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Error from getCurrentPosition()
+// geolocationPositionError {code: 1, message: "User denied Geolocation"}
+class App extends React.Component {
+	state = { lat: null, errorMessage: "" };
+
+	componentDidMount() {
+		navigator.geolocation.getCurrentPosition(
+			(position) => this.setState({ lat: position.coords.latitude }),
+			(err) => this.setState({ errorMessage: err.message })
+		);
+	}
+
+	// Content depends on if location has been read
+	renderContent() {
+		if (this.state.errorMessage && !this.state.lat) {
+			return <div>Error: {this.state.errorMessage}</div>;
+		}
+
+		if (!this.state.errorMessage && this.state.lat) {
+			return (
+				<div>
+					<SeasonDisplay lat={this.state.lat} />
+				</div>
+			);
+		}
+		return <Spinner message='Please accept location request' />;
+	}
+
+	render() {
+		return <div className='border red'>{this.renderContent()}</div>;
+	} // render()
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
