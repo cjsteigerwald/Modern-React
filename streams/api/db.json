@@ -1,0 +1,31 @@
+{
+  "streams": [
+    {
+      "title": "resr",
+      "description": "ers",
+      "id": 1
+    },
+    {
+      "title": "test",
+      "description": "test2",
+      "id": 2
+    },
+    {
+      "title": "Test ID",
+      "description": "Verify that ID is working",
+      "userId": "106243615985333005248",
+      "id": 3
+    },
+    {
+      "title": "Programmitic Navigation",
+      "description": "Testing patch request!!",
+      "userId": "106243615985333005248",
+      "id": 5
+    },
+    {
+      "title": "After Streaming Component Reuse",
+      "description": "Testing updating StreamEdit",
+      "id": 6
+    }
+  ]
+}
